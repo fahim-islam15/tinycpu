@@ -169,6 +169,7 @@ void ram() {
     g->print(buf);
   }
 }
+
 void regs() {
   g->setTextColor(CYAN, BLACK);
   g->setTextSize(2);
@@ -335,6 +336,7 @@ void dotFsm() {
   pol(th[ph] + 26 + 68.0f * (tk + 1) / 5, FR, dx, dy);
   g->fillCircle(dx, dy, 3, WHITE);
 }
+
 void drawWave() {
   g->fillRect(32, 62, 184, 112, BLACK);
   ct(120, 46, LIGHTGREY, "WAVEFORM", 1);
