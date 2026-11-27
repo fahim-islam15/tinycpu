@@ -1,13 +1,15 @@
 <div align="center">
 
-# 🧠 8-Bit CPU Visualizer — ESP32-C3 + GC9A01
+# 🧠 tinycpu
 
-**A tiny 5-instruction CPU that runs in slow motion on a 1.28" round LCD, drawn seven different ways — block diagram, datapath, FSM, waveform, pipeline, debugger and gauges.**
+**An 8-bit accumulator CPU that runs in slow motion on a 1.28" round LCD — drawn seven different ways, and mirrored live in your phone's browser over WiFi.**
 
 ![MCU](https://img.shields.io/badge/MCU-ESP32--C3-E7352C?style=for-the-badge&logo=espressif&logoColor=white)
 ![Display](https://img.shields.io/badge/Display-GC9A01%20240%C3%97240-00e5ff?style=for-the-badge)
+![WiFi](https://img.shields.io/badge/WiFi-SoftAP%20%2B%20web%20UI-3a79ff?style=for-the-badge)
 ![Lang](https://img.shields.io/badge/Arduino-C%2B%2B-00599C?style=for-the-badge&logo=arduino&logoColor=white)
-![Pages](https://img.shields.io/badge/Views-7-0f4c5c?style=for-the-badge)
+
+<img src="docs/all-screens.png" width="100%" alt="All eight screens"/>
 
 </div>
 
@@ -15,9 +17,63 @@
 
 ## 📖 What this is
 
-A teaching toy. It simulates an **8-bit accumulator CPU** at roughly one instruction per second and renders what the machine is doing onto a round display. One button cycles through seven views of the *same* running program, so you can watch a single instruction as a block diagram, then as a datapath, then as a state machine, then as a waveform.
+A teaching toy. It simulates an **8-bit accumulator CPU** at about one instruction per second and draws what the machine is doing onto a round display. One button cycles seven views of the *same* running program, so you can watch a single instruction as a block diagram, then a datapath, then a state machine, then a waveform.
 
-Nothing is pre-recorded — every view is driven live by the same simulated registers.
+It also brings up its own **WiFi access point** and serves a single-page web UI. The browser draws a pixel-accurate twin of the round display on a canvas, and adds what a 240×240 screen has no room for: register cards, an execution log, and an editable program. Edit an instruction in the browser and the hardware picks it up on the next poll.
+
+Nothing is pre-recorded — every view is driven by the same simulated registers.
+
+---
+
+## 📺 The seven views
+
+| | | |
+|:--:|:--:|:--:|
+| <img src="docs/screen-0-blocks.svg" width="210"/> | <img src="docs/screen-1-datapath.svg" width="210"/> | <img src="docs/screen-2-fsm.svg" width="210"/> |
+| **0 · Blocks** — RAM, control unit, PC, ALU, IR and OUT, with the address and data buses lighting up as they are used | **1 · Datapath** — a single-cycle RISC-style datapath with the live control-signal table (`IMM`, `WE`, `B`, `ALU`) | **2 · FSM** — the three phases as nodes on a circle, with a dot travelling the active arc in real time |
+| <img src="docs/screen-3-waveform.svg" width="210"/> | <img src="docs/screen-4-pipeline.svg" width="210"/> | <img src="docs/screen-5-debug.svg" width="210"/> |
+| **3 · Waveform** — a logic-analyser strip: `CLK`, the three phase signals, and `PC`, `A`, `OUT` as bus traces | **4 · Pipeline** — a 5-stage `IF/ID/EX/MEM/WB` diagram with the flush a taken `JMP` causes | **5 · Debug** — memory with the `PC` row highlighted, the register being written highlighted, and a scrolling log |
+| <img src="docs/screen-6-radial.svg" width="210"/> | <img src="docs/screen-boot-wifi.svg" width="210"/> | |
+| **6 · Radial** — a large `OUT` readout with concentric arc gauges for `A`, `B` and `PC` | **Boot** — the AP name, password and address, held for five seconds at startup | |
+
+> These are renderings produced from the sketch's own drawing code, not photographs of the panel. Colours are the RGB565 constants decoded exactly as the display receives them.
+
+> **Note on the pipeline view.** The simulated CPU is a three-phase sequencer, not a pipelined machine. Page 4 runs its own model over the same program to show what a pipelined version *would* do, including the two-instruction flush on a taken branch. It is a demonstration, not a readout of the executing core.
+
+---
+
+## 📶 The web UI
+
+On boot the board starts a WiFi access point and prints the details on screen:
+
+| | |
+|---|---|
+| SSID | `CPU-Display` |
+| Password | `12345678` |
+| Address | `http://192.168.4.1` |
+
+Join it from a phone or laptop and open the address. The page:
+
+- draws the **same seven pages** on a canvas, from the same drawing routines, scaled 2× for a crisp display
+- has **page tabs** and a BOOT button, and flipping a page in the browser flips it on the hardware
+- shows **PC / A / B / OUT** as large cards, plus a running **execution log**
+- lets you **edit the program** — pick a mnemonic and an operand per address and the change is pushed to the board
+- can **pause, single-step, reset**, and change the clock speed from 0.25× to 4×
+- follows the system light or dark theme, and responds to `space`, `←` and `→`
+
+The page is served from `PROGMEM` as one self-contained file: no CDN, no external assets, so it works on an AP with no internet. Captive-portal probes for Android (`/generate_204`) and iOS (`/hotspot-detect.html`) are answered so the "sign in to network" sheet behaves.
+
+If the board is unreachable the page keeps running its own simulation in the browser and shows *Offline, reconnecting* — so you can try the UI with no hardware at all.
+
+### HTTP interface
+
+| Route | Purpose |
+|---|---|
+| `GET /` | the UI |
+| `GET /s` | state: `seq,ph,pc,A,B,out,ir,ia,page,paused,arg[0..4],op[0..4]` |
+| `GET /c?a=…` | commands: `page&v=`, `pause&v=`, `step`, `reset`, `speed&v=`, `prog&i=&o=&g=` |
+
+The browser polls `/s` every 100 ms and only redraws when the sequence number changes.
 
 ---
 
@@ -42,7 +98,7 @@ Five instructions, one accumulator (`A`), one operand register (`B`), a program 
 └───────────────┴───────────────┘
 ```
 
-### The stored program
+### The default program
 
 | Addr | Byte | Instruction | Effect |
 |---|---|---|---|
@@ -52,35 +108,17 @@ Five instructions, one accumulator (`A`), one operand register (`B`), a program 
 | 3 | `0x40` | `OUT` | `OUT ← A` |
 | 4 | `0x52` | `JMP 2` | `PC ← 2` |
 
-The jump makes addresses 2–4 an infinite loop, so after the two loads the accumulator climbs by `B` every pass: **OUT shows 8, 11, 14, 17, 20 …**, wrapping at 256 because the registers are 8-bit. It is a counter that counts by three — deliberately boring, so the *visualisation* is the interesting part.
+The jump makes addresses 2–4 a loop, so after the two loads the accumulator climbs by `B` every pass: **OUT shows 8, 11, 14, 17, 20 …**, wrapping at 256 because the registers are 8-bit. A counter that counts by three — deliberately dull, so the *visualisation* is the interesting part. Change `LDB` in the browser and it counts by something else.
 
 ### Timing
 
-Each instruction runs as **three phases of 320 ms** — `FETCH` → `EXECUTE` → `PC+1` — so one instruction takes a little under a second. The simulated clock toggles every 80 ms, giving four clock edges per phase, and the last 36 samples are kept in a history buffer for the waveform view.
-
----
-
-## 📺 The seven views
-
-Press the button to cycle. The dots at the bottom of the screen show which page you are on.
-
-| # | View | What it shows |
-|---|---|---|
-| 0 | **Block diagram** | RAM, control unit, PC, ALU, IR and OUT as boxes; address and data buses light up green as they are used, and the clock square wave runs along the top |
-| 1 | **Datapath** | A single-cycle RISC-style datapath — PC, `+4`, instruction memory, register file, immediate generator, ALU, output latch — with the live control-signal table (`IMM`, `WE`, `B`, `ALU`) along the bottom |
-| 2 | **FSM** | The three phases as nodes on a circle, with arcs between them and a dot travelling along the active arc in real time |
-| 3 | **Waveform** | A logic-analyser strip: `CLK`, the three phase signals as square waves, and `PC`, `A`, `OUT` as bus traces with values printed at each change |
-| 4 | **Pipeline** | A 5-stage `IF/ID/EX/MEM/WB` diagram, cycle counter, and the flush that a taken `JMP` causes, with a running bubble count |
-| 5 | **Debugger** | Memory listing with the current `PC` row highlighted, register file with the register being written highlighted, and a scrolling three-line instruction log |
-| 6 | **Gauges** | A large `OUT` readout with three concentric arc gauges for `A`, `B` and `PC` |
-
-> **Note on the pipeline view.** The simulated CPU is a plain three-phase sequencer, not a pipelined machine. Page 4 runs its own independent model over the same program to illustrate what a pipelined version *would* do, including the two-instruction flush on a taken branch. It is a demonstration, not a readout of the executing core.
+Each instruction runs as **three phases of 320 ms** — `FETCH` → `EXECUTE` → `PC+1`. The simulated clock toggles every 80 ms, four edges per phase, and the last 36 samples feed the waveform view. The speed slider scales the inner delay from 0.25× to 4×.
 
 ---
 
 ## 🔌 Hardware
 
-- **Seeed XIAO ESP32-C3 / ESP32-C3 Super Mini**
+- **ESP32-C3 Super Mini** (or Seeed XIAO ESP32-C3)
 - **GC9A01** 1.28" 240×240 round IPS LCD, SPI
 - One momentary push button
 
@@ -102,6 +140,8 @@ Power the display from **3V3, not 5V**. If the module has a `BL` pin, tie it to 
 
 > ⚠️ **GPIO 9 is the BOOT strapping pin** on the ESP32-C3. Using it for the page button means no extra hardware — the onboard BOOT button works directly — but holding it down while the board resets puts the chip into download mode instead of running the sketch. Move the button to another free pin if that gets in your way.
 
+> 📡 **Antenna workaround.** `WiFi.setTxPower(WIFI_POWER_8_5dBm)` after `softAP()` is deliberate: many ESP32-C3 Super Mini boards have a poorly matched PCB antenna and drop clients at full transmit power. Lowering it trades range for a connection that stays up.
+
 ---
 
 ## ▶️ Building
@@ -112,7 +152,7 @@ Needs the **[GFX Library for Arduino](https://github.com/moononournation/Arduino
 
 1. Install the `esp32` board package by Espressif through Boards Manager.
 2. Install `GFX Library for Arduino` through Library Manager.
-3. Put `cpu_visualizer.ino` in a folder named `cpu_visualizer` (the IDE requires the sketch and its folder to share a name).
+3. Keep `tinycpu.ino` in a folder called `tinycpu` — cloning this repo already gives you that.
 4. Board: **ESP32C3 Dev Module**, with **USB CDC On Boot: Enabled**.
 
 **PlatformIO**
@@ -135,18 +175,24 @@ The current GFX library needs Arduino-ESP32 core 3.x. The stock `espressif32` pl
 
 ## 🎨 Changing the program
 
-The program lives in four arrays near the top of the sketch:
+At runtime, use the browser. In the source, the program is two arrays:
 
 ```cpp
-const char *nm[]    = {"LDA", "LDB", "ADD", "OUT", "JMP"};
-const char *micro[] = {"A = RAM", "B = RAM", "A = A + B", "OUT = A", "PC = ADDR"};
-const char *lf[]    = {"%d: A <- %d", ...};   // debugger log format
-const uint8_t arg[] = {5, 3, 0, 0, 2};        // operand per address
+uint8_t op[]  = {0, 1, 2, 3, 4};   // opcode per address
+uint8_t arg[] = {5, 3, 0, 0, 2};   // operand per address
 ```
 
-Edit `arg[]` to change the operands — set `arg[1]` to `7` and the counter steps by seven instead of three. Adding an instruction means extending `nm`, `micro`, `lf` and `arg`, bumping `N`, and adding a case to the `switch` in `loop()`.
+Adding an instruction means extending `nm`, `micro` and `lf`, bumping `N`, and adding a case to the `switch` in `loop()`. Phase length is the `wait(320)` calls; the clock period is the `ms / 80` divisor inside `wait()`.
 
-Phase length is the `wait(320)` calls in `loop()`; the clock period is the `ms / 80` divisor inside `wait()`.
+---
+
+## 🗂 Repository layout
+
+```
+tinycpu.ino    the sketch, with the web UI embedded in PROGMEM
+webui.html     the same page extracted, to open in a browser without hardware
+docs/          screen renderings generated from the drawing code
+```
 
 ---
 

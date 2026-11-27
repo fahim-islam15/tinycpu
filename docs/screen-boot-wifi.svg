@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" shape-rendering="crispEdges">
+<defs><clipPath id="round"><circle cx="120" cy="120" r="120"/></clipPath></defs>
+<g clip-path="url(#round)">
+<rect x="0" y="0" width="240" height="240" fill="#000819"/>
+<rect x="60" y="80" width="12" height="16" fill="#000819"/>
+<text x="60" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">W</text>
+<rect x="72" y="80" width="12" height="16" fill="#000819"/>
+<text x="72" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">i</text>
+<rect x="84" y="80" width="12" height="16" fill="#000819"/>
+<text x="84" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">F</text>
+<rect x="96" y="80" width="12" height="16" fill="#000819"/>
+<text x="96" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">i</text>
+<rect x="108" y="80" width="12" height="16" fill="#000819"/>
+<rect x="120" y="80" width="12" height="16" fill="#000819"/>
+<text x="120" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">r</text>
+<rect x="132" y="80" width="12" height="16" fill="#000819"/>
+<text x="132" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">e</text>
+<rect x="144" y="80" width="12" height="16" fill="#000819"/>
+<text x="144" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">a</text>
+<rect x="156" y="80" width="12" height="16" fill="#000819"/>
+<text x="156" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">d</text>
+<rect x="168" y="80" width="12" height="16" fill="#000819"/>
+<text x="168" y="94" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="16" fill="#ffffff" xml:space="preserve">y</text>
+<rect x="87" y="115" width="6" height="8" fill="#000819"/>
+<text x="87" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">C</text>
+<rect x="93" y="115" width="6" height="8" fill="#000819"/>
+<text x="93" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">P</text>
+<rect x="99" y="115" width="6" height="8" fill="#000819"/>
+<text x="99" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">U</text>
+<rect x="105" y="115" width="6" height="8" fill="#000819"/>
+<text x="105" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">-</text>
+<rect x="111" y="115" width="6" height="8" fill="#000819"/>
+<text x="111" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">D</text>
+<rect x="117" y="115" width="6" height="8" fill="#000819"/>
+<text x="117" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">i</text>
+<rect x="123" y="115" width="6" height="8" fill="#000819"/>
+<text x="123" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">s</text>
+<rect x="129" y="115" width="6" height="8" fill="#000819"/>
+<text x="129" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">p</text>
+<rect x="135" y="115" width="6" height="8" fill="#000819"/>
+<text x="135" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">l</text>
+<rect x="141" y="115" width="6" height="8" fill="#000819"/>
+<text x="141" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">a</text>
+<rect x="147" y="115" width="6" height="8" fill="#000819"/>
+<text x="147" y="122" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">y</text>
+<rect x="96" y="130" width="6" height="8" fill="#000819"/>
+<text x="96" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">1</text>
+<rect x="102" y="130" width="6" height="8" fill="#000819"/>
+<text x="102" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">2</text>
+<rect x="108" y="130" width="6" height="8" fill="#000819"/>
+<text x="108" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">3</text>
+<rect x="114" y="130" width="6" height="8" fill="#000819"/>
+<text x="114" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">4</text>
+<rect x="120" y="130" width="6" height="8" fill="#000819"/>
+<text x="120" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">5</text>
+<rect x="126" y="130" width="6" height="8" fill="#000819"/>
+<text x="126" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">6</text>
+<rect x="132" y="130" width="6" height="8" fill="#000819"/>
+<text x="132" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">7</text>
+<rect x="138" y="130" width="6" height="8" fill="#000819"/>
+<text x="138" y="137" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#00caff" xml:space="preserve">8</text>
+<rect x="87" y="145" width="6" height="8" fill="#000819"/>
+<text x="87" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">1</text>
+<rect x="93" y="145" width="6" height="8" fill="#000819"/>
+<text x="93" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">9</text>
+<rect x="99" y="145" width="6" height="8" fill="#000819"/>
+<text x="99" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">2</text>
+<rect x="105" y="145" width="6" height="8" fill="#000819"/>
+<text x="105" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">.</text>
+<rect x="111" y="145" width="6" height="8" fill="#000819"/>
+<text x="111" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">1</text>
+<rect x="117" y="145" width="6" height="8" fill="#000819"/>
+<text x="117" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">6</text>
+<rect x="123" y="145" width="6" height="8" fill="#000819"/>
+<text x="123" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">8</text>
+<rect x="129" y="145" width="6" height="8" fill="#000819"/>
+<text x="129" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">.</text>
+<rect x="135" y="145" width="6" height="8" fill="#000819"/>
+<text x="135" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">4</text>
+<rect x="141" y="145" width="6" height="8" fill="#000819"/>
+<text x="141" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">.</text>
+<rect x="147" y="145" width="6" height="8" fill="#000819"/>
+<text x="147" y="152" font-family="DejaVu Sans Mono,Menlo,monospace" font-size="8" fill="#ffb200" xml:space="preserve">1</text>
+</g>
+</svg>
